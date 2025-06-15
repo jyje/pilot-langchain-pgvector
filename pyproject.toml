@@ -1,0 +1,107 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pilot-langchain-pgvector"
+version = "0.1.0"
+description = "Example project demonstrating vector storage and search using pgVector and LangChain"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE"}
+authors = [
+    {name = "jyje", email = "jyjeon@outlook.com"},
+]
+keywords = ["pgvector", "langchain", "vector-database", "similarity-search", "ai"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Database",
+]
+
+dependencies = [
+    "langchain>=0.1.0,<0.2.0",
+    "langchain-openai>=0.0.2,<1.0.0",
+    "langchain-community>=0.0.10,<1.0.0",
+    "pgvector>=0.2.4,<1.0.0",
+    "psycopg2-binary>=2.9.9,<3.0.0",
+    "numpy>=1.26.2,<2.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    "openai>=1.6.1,<2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "jupyter>=1.0.0",
+    "jupyterlab>=4.0.0",
+    "notebook>=7.0.0",
+    "ipykernel>=6.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/jyje/pilot-langchain-pgvector"
+Repository = "https://github.com/jyje/pilot-langchain-pgvector.git"
+Issues = "https://github.com/jyje/pilot-langchain-pgvector/issues"
+
+[project.scripts]
+vector-example = "app.vector_example:main"
+jupyter-notebook = "jupyter:main"
+jupyter-lab = "jupyterlab.labapp:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "pgvector.*",
+    "langchain.*",
+    "openai.*",
+]
+ignore_missing_imports = true 
